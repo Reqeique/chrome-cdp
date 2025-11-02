@@ -1,8 +1,7 @@
 FROM zenika/alpine-chrome:with-node
 
-ENTRYPOINT ["chromium-browser"]
-
-CMD [
+ENTRYPOINT [
+  "chromium-browser",
   "--headless",
   "--remote-debugging-address=0.0.0.0",
   "--remote-debugging-port=9222",
