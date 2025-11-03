@@ -1,6 +1,12 @@
 #!/bin/sh
 set -e
 
+# Ensure PORT default for local testing
+: "${PORT:=8080}"
+
+# Render requires the app listen on $PORT; create nginx.conf from template
+envsubst '$PORT' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
+
 # Start Chrome bound to localhost so only the proxy can reach it
 chromium-browser \
   --headless \
