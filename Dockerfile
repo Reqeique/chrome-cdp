@@ -15,24 +15,19 @@
 #     --disable-features=IsolateOrigins,site-per-process
 FROM zenika/alpine-chrome:with-node
 
-# Add nginx
-RUN apk add --no-cache nginx && mkdir -p /run/nginx
+# Need root to install packages
+USER root
+RUN apk add --no-cache nginx && mkdir -p /run/nginx /var/log/nginx
 
 # Nginx config
 COPY nginx.conf /etc/nginx/nginx.conf
 
+# Small start script to launch both processes cleanly
+COPY start.sh /start.sh
+RUN chmod +x /start.sh
+
 EXPOSE 8080
 
-# Start Chrome bound to localhost and run nginx in foreground
-CMD sh -c '\
-  chromium-browser \
-    --headless \
-    --remote-debugging-address=127.0.0.1 \
-    --remote-debugging-port=9222 \
-    --no-sandbox \
-    --disable-dev-shm-usage \
-    --disable-gpu \
-    --disable-software-rasterizer \
-    --remote-allow-origins=* \
-    --allow-insecure-localhost & \
-  nginx -g "daemon off;"'
+# Keep root so nginx can start without permission issues.
+# Chrome is started with --no-sandbox, so it can run as root.
+CMD ["/start.sh"]
