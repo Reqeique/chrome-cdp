@@ -10,10 +10,10 @@ chromium-browser \
   # --disable-dev-shm-usage \
   # --disable-gpu \
   # --disable-software-rasterizer \
-  --remote-allow-origins=* \
-  --allow-insecure-localhost \
-  --disable-web-security \
-  --disable-features=IsolateOrigins,site-per-process &
+  # --remote-allow-origins=* \
+  # --allow-insecure-localhost \
+  # --disable-web-security \
+  # --disable-features=IsolateOrigins,site-per-process &
 
 # Run nginx in foreground
 exec nginx -g "daemon off;"
