@@ -6,7 +6,7 @@ chromium-browser \
   --headless \
   --remote-debugging-address=127.0.0.1 \
   --remote-debugging-port=9222 \
-  # --no-sandbox \
+  --no-sandbox \
   # --disable-dev-shm-usage \
   # --disable-gpu \
   # --disable-software-rasterizer \
