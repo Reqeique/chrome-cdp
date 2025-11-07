@@ -8,7 +8,7 @@ chromium-browser \
   --remote-debugging-port=9222 \
   --no-sandbox \
   # --disable-dev-shm-usage \
-  # --disable-gpu \
+  --disable-gpu \
   # --disable-software-rasterizer \
   # --remote-allow-origins=* \
   # --allow-insecure-localhost \
