@@ -1,0 +1,49 @@
+name: Trigger auto deployment for chrome-cdp
+
+# When this action will be executed
+on:
+  # Automatically trigger it when detected changes in repo
+  push:
+    branches: 
+      [ main ]
+    paths:
+    - '**'
+    - '.github/workflows/chrome-cdp-AutoDeployTrigger-8d4f6d33-f66a-423a-8f1a-c2f42a883c4c.yml'
+
+  # Allow manual trigger 
+  workflow_dispatch:      
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions: 
+      id-token: write #This is required for requesting the OIDC JWT Token
+      contents: read #Required when GH token is used to authenticate with private repo
+
+    steps:
+      - name: Checkout to the branch
+        uses: actions/checkout@v2
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.CHROMECDP_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.CHROMECDP_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.CHROMECDP_AZURE_SUBSCRIPTION_ID }}
+
+      - name: Build and push container image to registry
+        uses: azure/container-apps-deploy-action@v2
+        with:
+          appSourcePath: ${{ github.workspace }}
+          _dockerfilePathKey_: _dockerfilePath_
+          _targetLabelKey_: _targetLabel_
+          registryUrl: docker.io
+          registryUsername: ${{ secrets.CHROMECDP_REGISTRY_USERNAME }}
+          registryPassword: ${{ secrets.CHROMECDP_REGISTRY_PASSWORD }}
+          containerAppName: chrome-cdp
+          resourceGroup: AnaniyaJem-rg
+          imageToBuild: ananiya0jemberu/chrome-cdp:${{ github.sha }}
+          _buildArgumentsKey_: |
+            _buildArgumentsValues_
+
+
