@@ -3,10 +3,11 @@ set -e
 
 # Start Chrome bound to localhost so only the proxy can reach it
 chromium-browser \
-  --headless=new \
+  --headless \
   --remote-debugging-address=127.0.0.1 \
   --remote-debugging-port=9222 \
   --no-sandbox \
+  --disable-dev-shm-usage \
   --remote-allow-origins=* \
   --allow-insecure-localhost &
 
