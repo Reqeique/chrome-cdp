@@ -9,7 +9,7 @@ const { chromium } = require('playwright');
   const browser = await chromium.launch({
     headless: 'new',              // modern headless mode
     args: [
-      '--remote-debugging-address=0.0.0.0', // listen on all interfaces
+      '--remote-debugging-address=127.0.0.1', // listen on all interfaces
       '--remote-debugging-port=9222',
       '--no-sandbox',
       '--disable-dev-shm-usage',
