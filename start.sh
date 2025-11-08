@@ -14,6 +14,8 @@ chromium-browser \
   --allow-insecure-localhost \
   --disable-web-security \
   --disable-features=IsolateOrigins,site-per-process &
+
+  
 sleep 2
 # Run nginx in foreground
 exec nginx -g "daemon off;"
