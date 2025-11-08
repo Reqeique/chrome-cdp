@@ -29,4 +29,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ananiya0jemberu/mycdp:dev4.8
+          tags: ananiya0jemberu/mycdp:dev5
