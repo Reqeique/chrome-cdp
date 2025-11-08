@@ -7,7 +7,6 @@ chromium-browser \
   --remote-debugging-address=127.0.0.1 \
   --remote-debugging-port=9222 \
   --no-sandbox \
-  --disable-dev-shm-usage \
   --remote-allow-origins=* \
   --allow-insecure-localhost &
 
