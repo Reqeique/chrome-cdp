@@ -1,7 +1,7 @@
 name: Build and push Docker image to Docker Hub
 on:
   push:
-    branches: [ main ]        # rebuild on pushes to main; change as needed
+    branches: [ playwright ]        # rebuild on pushes to main; change as needed
     # tags: ['v*']           # optionally build on tags
 
 jobs:
@@ -29,4 +29,4 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ananiya0jemberu/mycdp:dev5.3
+          tags: ananiya0jemberu/mycdp:dev5.5

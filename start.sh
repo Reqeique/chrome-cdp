@@ -1,15 +1,30 @@
 #!/bin/sh
 set -e
 
-# Start Chrome bound to localhost so only the proxy can reach it
-chromium-browser \
-  --headless \
-  --remote-debugging-address=127.0.0.1 \
-  --remote-debugging-port=9222 \
-  --no-sandbox \
-  --disable-dev-shm-usage \
-  --remote-allow-origins=* \
-  --allow-insecure-localhost &
+# Launch Chromium headless with remote debugging (CDP) exposed
+node - <<'EOF' 
+const { chromium } = require('playwright');
 
-# Run nginx in foreground
+(async () => {
+  const browser = await chromium.launch({
+    headless: 'new',              // modern headless mode
+    args: [
+      '--remote-debugging-address=127.0.0.1', // listen on all interfaces
+      '--remote-debugging-port=9222',
+      '--no-sandbox',
+      '--disable-dev-shm-usage',
+      '--disable-gpu',
+      '--allow-insecure-localhost',
+      '--disable-background-timer-throttling'
+    ]
+  });
+
+  console.log('Chromium launched with CDP on port 9222');
+
+  // Keep the browser alive
+  await new Promise(() => {}); // infinite wait
+})();
+EOF
+
+# Run nginx in foreground if needed
 exec nginx -g "daemon off;"
